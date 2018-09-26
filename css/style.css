@@ -37,6 +37,16 @@ a {
   color: #006dc1!important;
 }
 
+/* summary text */
+
+#summary_list {
+  font-size: 0.8rem;
+}
+
+.winner {
+  font-weight: bold;
+}
+
 /* Hide buttons */
 
 #startGame, #startTurn, #newGame, #waiting, #showSummary {
