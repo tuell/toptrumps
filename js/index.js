@@ -326,10 +326,38 @@ function getMode() {
   }
 
 
+  // build random list of categories - delete this section if
+  // getCategories() will be used
+
+  chosenCategories = [];
+  for (i = 1; i < data_header.length; i++) {
+    chosenCategories.push(i);
+  }
+
+  var currentCatIndex = chosenCategories.length, temporaryCatValue, randomCatIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentCatIndex) {
+
+    // Pick a remaining element...
+    randomCatIndex = Math.floor(Math.random() * currentCatIndex);
+    currentCatIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryCatValue = chosenCategories[currentCatIndex];
+    chosenCategories[currentCatIndex] = chosenCategories[randomCatIndex];
+    chosenCategories[randomCatIndex] = temporaryCatValue;
+  }
+
+  // Use number (specified before) of categories of shuffled list
+  chosenCategories = chosenCategories.slice(0, numberOfCategories);
+
+
+
   // Let player choose game mode
   $(document).on('click', '#randomCards', function() {
     gameMode = "random";
-    updateButtons(2);
+    initGame();
   });
 
   $(document).on('click', '#chosenCardButton', function() {
@@ -339,7 +367,7 @@ function getMode() {
     if (chosenCard == "noSelection") {
       noCardSelectionDiv.innerHTML = noCardSelectionMsG;
     } else {
-      updateButtons(2);
+      initGame();
     }
 
   });
@@ -529,51 +557,44 @@ $(document).ready(function() {
       var chosenPlayerCategory = document.getElementById("player_category_row" + categoryID);
       var chosenComputerCategory = document.getElementById("computer_category_row" + categoryID);
 
-      // Prepare summary
+      // Prepare summary entry
 
       var newSummaryLine = document.createElement("div");
-      newSummaryLine.classList.add("list-group-item");
-	  newSummaryRow = document.createElement("div");
-      newSummaryRow.classList.add("row");
-      var newSummaryEmoji = document.createElement("div");
-      newSummaryEmoji.classList.add("d-none", "d-sm-block", "col-sm-2");
+      newSummaryLine.classList.add("d-flex", "w-100", "border-bottom", "py-1");
+
 
       var newSummaryPlayer = document.createElement("div");
-      newSummaryPlayer.classList.add("p-1", "col-6");
-      newSummaryPlayer.innerHTML = "<strong>" + currentPlayerCard[0] + "</strong><br>" + data_header[categoryID] + ": <br class='d-block d-sm-none'>" + currentPlayerCard[categoryID] + data_suffix[categoryID];
+      newSummaryPlayer.classList.add("text-right")
+      newSummaryPlayer.style = "width: 40%;"
+      newSummaryPlayer.innerHTML = currentPlayerCard[0] + "<br>" + currentPlayerCard[categoryID] + data_suffix[categoryID];
+
+      var newSummaryCat = document.createElement("div");
+      newSummaryCat.classList.add("text-center", "d-inline-block", "text-truncate", "px-1")
+      newSummaryCat.style = "width: 20%;"
+      newSummaryCat.innerHTML = "<i>" + data_header[categoryID] + "</i>";
 
       var newSummaryComputer = document.createElement("div");
-      newSummaryComputer.classList.add("p-1", "col-6");
-      newSummaryComputer.innerHTML = "<strong>" + currentComputerCard[0] + "</strong><br>" + data_header[categoryID] + ": <br class='d-block d-sm-none'>" + currentComputerCard[categoryID] + data_suffix[categoryID];
+      newSummaryComputer.classList.add("text-left")
+      newSummaryComputer.style = "width: 40%;"
+      newSummaryComputer.innerHTML = currentComputerCard[0] + "<br>" + currentComputerCard[categoryID] + data_suffix[categoryID];
 
       if (data_comparison[categoryID] == "larger") {
         if (firstPlayerCard[categoryID] > firstComputerCard[categoryID]) {
-          newSummaryEmoji.innerHTML = "<h1><i class='em em-slightly_smiling_face'></h1>";
-          newSummaryLine.classList.add('list-group-item-success');
+          newSummaryPlayer.classList.add('winner');
         } else if (firstPlayerCard[categoryID] < firstComputerCard[categoryID]) {
-          newSummaryEmoji.innerHTML = "<h1><i class='em em-robot_face'></h1>";
-          newSummaryLine.classList.add('list-group-item-danger');
-        } else {
-          newSummaryEmoji.innerHTML = "<h1><i class='em em-full_moon_with_face'></h1>";
-          newSummaryLine.classList.add('list-group-item-warning');
+          newSummaryComputer.classList.add('winner');
         }
       } else {
         if (firstPlayerCard[categoryID] < firstComputerCard[categoryID]) {
-          newSummaryEmoji.innerHTML = "<h1><i class='em em-slightly_smiling_face'></h1>";
-          newSummaryLine.classList.add('list-group-item-success');
+          newSummaryPlayer.classList.add('winner');
         } else if (firstPlayerCard[categoryID] > firstComputerCard[categoryID]) {
-          newSummaryEmoji.innerHTML = "<h1><i class='em em-robot_face'></h1>";
-          newSummaryLine.classList.add('list-group-item-danger');
-        } else {
-          newSummaryEmoji.innerHTML = "<h1><i class='em em-full_moon_with_face'></h1>";
-          newSummaryLine.classList.add('list-group-item-warning');
+          newSummaryComputer.classList.add('winner');
         }
       }
 
-      // newSummaryRow.appendChild(newSummaryEmoji);
-      newSummaryRow.appendChild(newSummaryPlayer);
-      newSummaryRow.appendChild(newSummaryComputer);
-      newSummaryLine.appendChild(newSummaryRow);
+      newSummaryLine.appendChild(newSummaryPlayer);
+      newSummaryLine.appendChild(newSummaryCat);
+      newSummaryLine.appendChild(newSummaryComputer);
 
       summaryList.appendChild(newSummaryLine);
 
