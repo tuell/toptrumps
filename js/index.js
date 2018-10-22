@@ -1,27 +1,42 @@
 // This script controls the mechanics behind a "top trumps"-style game.
 // Developed by the data journalism team of the Hessischer Rundfunk in 2018
-// (C) 2018/10/22
 
+/*  Copyright (C) 2018  Till Hafermann
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
 // CUSTOMIZATION: To build your own game, change the text to display
 
 // dropdown for choosing a card
-var chooseCardMsg = "(Wahlkreis auswählen)";
+var chooseCardMsg = "(Choose card)";
 // error message if no card is chosen
-var noCardSelectionMsG = "Kein Wahlkreis ausgewählt";
+var noCardSelectionMsG = "No card selected";
 // error message if wrong number of categories is chosen
-var noCategorySelectionMsG = "Genau fünf Kategorien auswählen";
-var turnWonMsg = "Gewonnen!"; // turn won
-var turnLostMsg = "Verloren..."; // turn lost
-var turnDrawMsg = "Unentschieden."; // turn results in draw
-var gameWonMsg = "Spiel gewonnen: "; // game won
-var gameLostMsg = "Spiel verloren: "; // game lost
-var gameDrawMsg = "Unentschieden: "; // game results in draw
+var noCategorySelectionMsG = "Select exactly five categories";
+var turnWonMsg = "Turn won!"; // turn won
+var turnLostMsg = "Turn lost..."; // turn lost
+var turnDrawMsg = "Draw."; // turn results in draw
+var gameWonMsg = "Game won: "; // game won
+var gameLostMsg = "Game lost: "; // game lost
+var gameDrawMsg = "Draw: "; // game results in draw
 // text to display in infoline while player choses category
-var turnWaitMsg = "Kategorie w&auml;hlen";
+var turnWaitMsg = "Chose categories";
 // text to display in infoline when game is over
-var gameOverMsg = "Spiel vorbei";
+var gameOverMsg = "Game over";
 // text to display in infoline when summary is shown
-var gameWaitMsg = "Neues Spiel beginnen?";
+var gameWaitMsg = "Start new game?";
 
 
 // Game is configured for seven rounds and five categories per card.
@@ -34,125 +49,73 @@ var currentRound = 1;
 
 
 // CUSTOMIZATION: Enter your data for the cards here
+// Example data for countries of the EU taken from various Wikipedia pages (Oct. 22, 2018)
 
 // Data header: Names of the categories, first one = title of the card
-var data_header = ["Wahlkreis", "Einwohner", "Fläche", "Altersschnitt",
-                   "Geburtensaldo", "Schulden/Kopf", "Breitband",
-                   "Einwohner/Arzt", "Waldfläche", "Landwirtschaft",
-                   "Eheschließungen"];
+var data_header = ["Country", "Population", "Area", "Density", 
+				   "Growth", "Unemployment", "Life expectancy"];
 
 // Category names for summary
-var summary_header = ["Wahl&shy;kreis", "Einwoh&shy;ner", "Fläche",
-                      "Alters&shy;schnitt", "Geburten&shy;saldo",
-                      "Schulden pro Kopf", "Breit&shy;band",
-                      "Einwohner pro Arzt", "Wald&shy;fläche",
-                      "Landwirt&shy;schaft", "Eheschlie&shy;ßungen"];
+var summary_header = ["", "Popu&shy;lation", "Area", "Den&shy;sity", 
+					  "Growth", "Unem&shy;ploy&shy;ment", "Life ex&shy;pectancy"];
 
 // Units if necessary, first entry always empty
-var data_suffix = ["", "", "\u2006km\u00B2", "", "", "\u2006\u20AC",
-                   "\u0025", "", "\u0025", "\u0025", ""];
+var data_suffix = ["", " mio.", " km\u00B2", "", " %", " %", " yrs"];
 
 // Specify which number wins: larger or smaller, first entry always empty
-var data_comparison = ["", "larger", "larger", "smaller", "larger", "smaller",
-                       "larger", "smaller", "larger", "larger", "larger"];
+var data_comparison = ["", "larger", "larger", "larger", "larger", "smaller", "larger"];
 
 // One array per card, structure: Title first, then category values
-var wk_1=["KS-Land I",114530,1020.2,46.3,-534,4460,45.2,1450,40.5,46.8,624];
-var wk_2=["KS-Land II",120433,268.5,46.5,-419,3111,63.4,2316,35.2,37.1,457];
-var wk_3=["KS-Stadt I",95262,57.5,41.6,-206,4857,91.6,2165,38.6,14.6,490];
-var wk_4=["KS-Stadt II",108759,49.3,41.6,174,4857,91.5,1875,5.7,14.6,559];
-var wk_5=["Waldeck-Fr. I",79754,907.6,45.6,-371,3899,69.4,1266,38.7,48,489];
-var wk_6=["Waldeck-Fr. II",78213,940.8,45.2,-287,4712,72.2,1862,51.9,36.5,442];
-var wk_7=["Schwalm-Eder I",90371,613.3,45.3,-283,3330,47.4,1738,33.6,49.7,455];
-var wk_8=["Schwalm-Eder II",90734,925.2,45.9,-538,6053,43.8,2327,36.2,48.4,408];
-var wk_9=["Eschw.-Witzenh.",75970,595.2,46.8,-572,6238,70.5,1899,37.2,38.7,393];
-var wk_10=["Rotenburg",77211,940.9,46.2,-347,5153,58.8,2271,44.1,43.2,296];
-var wk_11=["Hersfeld",77813,679.7,45.9,-242,6393,53.9,1945,40.7,44.5,355];
-var wk_12=["Marb.-Bied. I",111323,770.6,44.6,-379,3237,60.6,2141,42.8,42,422];
-var wk_13=["Marb.-Bied. II",133690,492,41.3,17,3618,80.2,1857,37.2,45.4,679];
-var wk_14=["Fulda I",106473,451.4,43.3,-153,3766,93,1690,35.7,46.1,546];
-var wk_15=["Fulda II",107647,839.2,44.3,-8,1893,74.4,2031,36.3,48.6,504];
-var wk_16=["Lahn-Dill I",122713,648.1,44.6,-342,3886,82.8,1753,50.9,31.7,596];
-var wk_17=["Lahn-Dill II",131361,418.4,44.7,-404,5160,84.9,1775,41.3,36.9,632];
-var wk_18=["Gießen I",135108,220,40.8,157,4713,89.8,1801,36.2,34,632];
-var wk_19=["Gießen II",120896,537.6,44.4,-69,3481,66.8,1474,30.6,50.7,586];
-var wk_20=["Vogelsberg",116432,1556,46.4,-523,3996,52.8,1764,39.5,48.1,504];
-var wk_21=["Limb.-Weilb. I",88262,264.7,43.9,-169,2987,82.1,1961,21.3,54.2,369];
-var wk_22=["Limb.-Weilb. II",83858,473.8,44.9,-280,4014,78.3,1525,40.8,41.2,
-           469];
-var wk_23=["Hochtaunus I",122643,254.8,44.8,-91,6356,97.7,2991,44.1,34,581];
-var wk_24=["Hochtaunus II",112348,227.2,44.7,-197,6692,95,2740,55.4,24.2,695];
-var wk_25=["Wetterau I",112345,220.8,43.4,-104,3825,96.5,2080,17.1,60.9,387];
-var wk_26=["Wetterau II",95562,547.1,44.7,-332,3719,91.7,1541,35.6,49,531];
-var wk_27=["Wetterau III",96007,332.9,44.7,-286,4266,92.9,1882,25.8,55.3,505];
-var wk_28=["Rheing.-Taun. I",89137,444.5,45.7,-245,5599,79.2,1714,58.3,24.5,
-           596];
-var wk_29=["Rheing.-Taun. II",96531,367,44.9,-159,5700,85.2,2609,48.8,34.6,428];
-var wk_30=["Wiesbaden I",157207,75.2,41,383,5319,99.7,2382,42.5,29.6,891];
-var wk_31=["Wiesbaden II",133340,128.6,41,-46,5319,95.6,2339,17.1,29.6,756];
-var wk_32=["Main-Taunus I",119224,100.1,44.1,66,4548,95.5,3974,28.6,37.2,360];
-var wk_33=["Main-Taunus II",116484,122.3,43.8,122,6072,95.3,2157,19.6,44.7,491];
-var wk_34=["Frankfurt/M I",112611,34.8,41.2,567,7283,87.7,2011,1.8,24,431];
-var wk_35=["Frankfurt/M II",113755,29,41.2,470,7283,95.8,2420,1.2,24,435];
-var wk_36=["Frankfurt/M III",137135,21.3,41.2,702,7283,97.2,1905,0.4,24,525];
-var wk_37=["Frankfurt/M IV",117212,82.5,41.2,342,7283,96.7,2726,40.4,24,449];
-var wk_38=["Frankfurt/M V",110886,13,41.2,643,7283,96.7,1980,0,24,424];
-var wk_39=["Frankfurt/M VI",138025,67.7,41.2,526,7283,94.6,3067,4.7,24,528];
-var wk_40=["Main-Kinzig I",127743,305.8,45,-218,2917,93.4,2281,30.1,48.2,516];
-var wk_41=["Main-Kinzig II",159720,141.5,42.6,225,7430,97.7,2188,26.2,30.5,
-           1307];
-var wk_42=["Main-Kinzig III",129252,950.3,45.5,-460,3915,86.3,2085,49.3,37.1,
-           551];
-var wk_43=["OF-Stadt",124589,44.9,41,416,9208,96.4,1947,32.8,14.1,466];
-var wk_44=["OF-Land I",127446,121.6,43.8,137,5621,97.7,2317,47.4,19.8,543];
-var wk_45=["OF-Land II",105538,75,43.4,219,5914,95.9,2294,42.1,18.7,295];
-var wk_46=["OF-Land III",116998,159.8,44.5,-117,4435,87.1,2659,39.9,28.9,501];
-var wk_47=["Groß-Gerau I",136188,123,42,292,7607,95.4,2724,32.9,21.7,491];
-var wk_48=["Groß-Gerau II",132857,330,43.4,99,4083,86.5,2507,19.8,55.4,550];
-var wk_49=["DA-Stadt I",102728,83.2,41.2,281,14561,97.4,2283,44.4,19.1,579];
-var wk_50=["DA-Stadt II",103804,158.4,41.2,27,9580,89.8,2532,41.6,29.8,585];
-var wk_51=["DA-Dieburg I",120744,173.7,43.7,-16,3882,93.1,3177,29,42.8,564];
-var wk_52=["DA-Dieburg II",127450,365.3,44,-22,3494,86.3,3109,36.3,45.3,619];
-var wk_53=["Odenwald",96473,624,45.7,-354,4318,92.6,1929,56,32.2,477];
-var wk_54=["Bergstraße I",137382,299.6,44.6,-217,3723,94.5,2498,33.6,42.6,618];
-var wk_55=["Bergstraße II",130553,419.9,45.6,-496,4913,79,1920,44.4,39.1,698];
+var austria = ["Austria", 8.77, 83858, 104.6, 5.6, 10.6, 82];
+var belgium = ["Belgium", 11.35, 30510, 372.1, 5.4, 7.8, 81];
+var bulgaria = ["Bulgaria", 7.1, 110912, 64, -7.3, 5.8, 75];
+var croatia = ["Croatia", 4.15, 56594, 73.4, -11.8, 8.6, 77];
+var cyprus = ["Cyprus", 0.85, 9250, 92.4, 11, 8.2, 80];
+var czechrepublic = ["Czech Republic", 10.58, 78866, 134.1, 2.9, 2.3, 79];
+var denmark = ["Denmark", 5.75, 43094, 133.4, 5.6, 4.3, 81];
+var estonia = ["Estonia", 1.32, 45226, 29.1, 2.7, 6.5, 77];
+var finland = ["Finland", 5.5, 337030, 16.3, 1.8, 8.2, 81];
+var france = ["France", 66.99, 643548, 104.1, 3.5, 10.6, 83];
+var germany = ["Germany", 82.52, 357021, 231.1, 4, 5.5, 81];
+var greece = ["Greece", 10.77, 131957, 81.6, -2.7, 21.7, 82];
+var hungary = ["Hungary", 9.8, 93030, 105.3, -2, 3.8, 76];
+var ireland = ["Ireland", 4.78, 70280, 68.1, 11.2, 5.1, 82];
+var italy = ["Italy", 60.59, 301320, 201.1, -1.7, 11.3, 83];
+var latvia = ["Latvia", 1.95, 64589, 30.2, -8.1, 10.3, 74];
+var lithuania = ["Lithuania", 2.85, 65200, 43.7, -13.8, 7.4, 75];
+var luxembourg = ["Luxembourg", 0.59, 2586, 228.4, 19, 6.7, 82];
+var malta = ["Malta", 0.46, 316, 1456.6, 32.9, 5.1, 82];
+var netherlands = ["Netherlands", 17.08, 41526, 411.3, 2.1, 4.8, 82];
+var poland = ["Poland", 37.97, 312685, 121.4, 0.1, 4.5, 78];
+var portugal = ["Portugal", 10.31, 92931, 110.9, -1.8, 7.8, 82];
+var romania = ["Romania", 19.64, 238391, 82.4, -6.2, 3.94, 75];
+var slovakia = ["Slovakia", 5.44, 48845, 111.3, 1.4, 6.4, 77];
+var slovenia = ["Slovenia", 2.07, 20253, 102, 0.5, 7.8, 81];
+var spain = ["Spain", 46.53, 504782, 92.2, 2.8, 16.8, 83];
+var sweden = ["Sweden", 10, 449964, 22.2, 12.4, 7.5, 83];
+var uk = ["United Kingdom", 65.81, 244820, 268.8, 6.5, 4.3, 82];
 
 
 // group cards in one array
-var allCards = [wk_1, wk_2, wk_3, wk_4, wk_5, wk_6, wk_7, wk_8, wk_9, wk_10,
-                wk_11, wk_12, wk_13, wk_14, wk_15, wk_16, wk_17, wk_18, wk_19,
-                wk_20, wk_21, wk_22, wk_23, wk_24, wk_25, wk_26, wk_27, wk_28,
-                wk_29, wk_30, wk_31, wk_32, wk_33, wk_34, wk_35, wk_36, wk_37,
-                wk_38, wk_39, wk_40, wk_41, wk_42, wk_43, wk_44, wk_45, wk_46,
-                wk_47, wk_48, wk_49, wk_50, wk_51, wk_52, wk_53, wk_54, wk_55];
+var allCards = [austria, belgium, bulgaria, croatia, cyprus, czechrepublic, 
+				denmark, estonia, finland, france, germany, greece, hungary, 
+				ireland, italy, latvia, lithuania, luxembourg, malta, netherlands, 
+				poland, portugal, romania, slovakia, slovenia, spain, 
+				sweden, uk];
 
 // list of cards in case player wants to choose a specific card to play with
 // list of arrays with variable name and titel of card
-var cardsList = [["wk_1", "Kassel-Land I"], ["wk_2", "Kassel-Land II"],
-["wk_3", "Kassel-Stadt I"], ["wk_4", "Kassel-Stadt II"],
-["wk_5", "Waldeck-Frankenberg I"],["wk_6", "Waldeck-Frankenberg II"],
-["wk_7", "Schwalm-Eder I"], ["wk_8", "Schwalm-Eder II"],
-["wk_9", "Eschwege-Witzenhausen"], ["wk_10", "Rotenburg"],
-["wk_11", "Hersfeld"],["wk_12", "Marburg-Biedenkopf I"],
-["wk_13", "Marburg-Biedenkopf II"], ["wk_14", "Fulda I"],
-["wk_15", "Fulda II"], ["wk_16", "Lahn-Dill I"], ["wk_17", "Lahn-Dill II"],
-["wk_18", "Gießen I"], ["wk_19", "Gießen II"], ["wk_20", "Vogelsberg"],
-["wk_21", "Limburg-Weilburg I"], ["wk_22", "Limburg-Weilburg II"],
-["wk_23", "Hochtaunus I"], ["wk_24", "Hochtaunus II"], ["wk_25", "Wetterau I"],
-["wk_26", "Wetterau II"], ["wk_27", "Wetterau III"],
-["wk_28", "Rheingau-Taunus I"],["wk_29", "Rheingau-Taunus II"],
-["wk_30", "Wiesbaden I"], ["wk_31", "Wiesbaden II"],["wk_32", "Main-Taunus I"],
-["wk_33", "Main-Taunus II"], ["wk_34", "Frankfurt am Main I"],
-["wk_35", "Frankfurt am Main II"], ["wk_36", "Frankfurt am Main III"],
-["wk_37", "Frankfurt am Main IV"], ["wk_38", "Frankfurt am Main V"],
-["wk_39", "Frankfurt am Main VI"], ["wk_40", "Main-Kinzig I"],
-["wk_41", "Main-Kinzig II"], ["wk_42", "Main-Kinzig III"],
-["wk_43", "Offenbach-Stadt "], ["wk_44", "Offenbach Land I"],
-["wk_45", "Offenbach Land II"], ["wk_46", "Offenbach Land III"],
-["wk_47", "Groß-Gerau I"], ["wk_48", "Groß-Gerau II"],
-["wk_49", "Darmstadt-Stadt I"], ["wk_50", "Darmstadt-Stadt II"],
-["wk_51", "Darmstadt-Dieburg I"], ["wk_52", "Darmstadt-Dieburg II"],
-["wk_53", "Odenwald"],["wk_54", "Bergstraße I"], ["wk_55", "Bergstraße II "]];
+var cardsList = [["austria", "Austria"], ["belgium", "Belgium"], 
+	["bulgaria", "Bulgaria"], ["croatia", "Croatia"], ["cyprus", "Cyprus"], 
+	["czechrepublic", "Czech Republic"], ["denmark", "Denmark"], ["estonia", "Estonia"], 
+	["finland", "Finland"], ["france", "France"], ["germany", "Germany"], 
+	["greece", "Greece"], ["hungary", "Hungary"], ["ireland", "Ireland"], 
+	["italy", "Italy"], ["latvia", "Latvia"], ["lithuania", "Lithuania"], 
+	["luxembourg", "Luxembourg"], ["malta", "Malta"], 
+	["netherlands", "Netherlands"], ["poland", "Poland"], ["portugal", "Portugal"], 
+	["romania", "Romania"], ["slovakia", "Slovakia"], ["slovenia", "Slovenia"], 
+	["spain", "Spain"], ["sweden", "Sweden"], ["uk", "United Kingdom"]];
+
 
 
 // Inititate buttons and information displays
@@ -190,14 +153,16 @@ var currentPlayerCard;
 var currentComputerCard;
 var stateOfGame;
 
-// format numbers for display, currently set to German locale:
-// decimal divider is ",", thousands separator is "."
+// format numbers for display,
+// decimal divider is ".", thousands separator is ","
 function formatNumbers(num){
   return (
     num
       .toString()
-      .replace(".",",")
-      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+	  // for German locale use lines below
+      // .replace(".",",")
+      // .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
     );
 }
 
