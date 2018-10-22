@@ -1,5 +1,5 @@
 # Top trumps online game
-This is a simple online implementation of a "Top trumps"-style card game ("Quartett" in German) with nothing but HTML 5, Javascript and Jquery. The game should work in all modern browsers on both desktop and mobile devices.  
+This is a simple online implementation of a "Top trumps"-style card game ("Quartett" in German) with HTML 5, Javascript and jQuery. The game should work in all modern browsers on both desktop and mobile devices.  
 
 _**Disclaimer: This code was built to just work, it is not optimised in terms of elegance, performance or anything else.**_
 
