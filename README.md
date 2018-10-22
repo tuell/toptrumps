@@ -15,7 +15,7 @@ The game is inspired by games like "Top Trumps" [(Wikipedia)](https://en.wikiped
 Reading about statistical data can be boring and tiring. By presenting data in a game, hopefully the users are more engaged, have fun with the data and better remember them, especially when they did not expect certain constellations.
 
 ## How to implement it
-To use this code, download the files and change them according to your needs. All files are extensively annotated in case you want to adapt them.
+To use this code, download the files and change them according to your needs. The code is intended to be embedded in an iFrame, but you could of course build a standalone web page around it. All files are extensively annotated in case you want to adapt them.
 
 ### index.html
 This contains the basic elements of the game, such as card templates, containers for hud elements and the container for the summary.
