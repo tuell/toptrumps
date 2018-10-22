@@ -1,11 +1,14 @@
 # Top trumps online game
 This is a simple online implementation of a "Top trumps"-style card game ("Quartett" in German) with nothing but HTML 5, Javascript and Jquery. 
 
-> ## Disclaimer
-> **This code was built to just work, it is not optimised in terms of elegancy, performance or anything else.**
+---
+**Disclaimer: This code was built to just work, it is not optimised in terms of elegancy, performance or anything else.**
+---
 
 ## What you get
-This code implements a full screen web game intended for embedding in another web page. It consists of an HTML-file, the Javascript and Jquery to insert the data and control the game and a stylesheet. The game uses Bootstrap [Bootstrap](https://getbootstrap.com/ "Twitter Bootstrap 4") for structuring and is fully responsive. 
+This code implements a full screen web game intended for embedding in another web page. It consists of an HTML-file, the Javascript and Jquery to insert the data and control the game and a stylesheet. The game uses [Bootstrap](https://getbootstrap.com/ "Twitter Bootstrap 4") for structuring and is fully responsive. 
+
+An example can be seen and played at [hessenschau.de *(German)*](https://www.hessenschau.de/politik/wahlen/landtagswahl-2018/das-grosse-hrwahl-quartett,ltw18-wahlkreisquartett-104.html "Wahlkreis-Quartett").
 
 ## Where it works
 The game should work in all modern browsers on desktop PCs and mobile devices. 
@@ -25,34 +28,41 @@ This code controls the actual game. Also the data for the cards are loaded here.
 #### How to prepare the data
 The data need to be defined as variables in the index.js. This is what you need:
 
-`data_header`: Array of the different categories, the first entry should be the type of card. Example: 
-```var data_header = ["Country", "Population", "Area", "Density", 
+**data_header**: Array of the different categories, the first entry should be the type of card. Example: 
+```
+var data_header = ["Country", "Population", "Area", "Density", 
 				   "Growth", "Unemployment", "Life expectancy"];
 ```
 
-`summary_header`: Shortened description of the categories, insert conditional hyphenation with `&shy;`. Example: 
-```var summary_header = ["", "Popu&shy;lation", "Area", "Den&shy;sity", 
+**summary_header**: Shortened description of the categories, insert conditional hyphenation with `&shy;`. Example: 
+```
+var summary_header = ["", "Popu&shy;lation", "Area", "Den&shy;sity", 
 					  "Growth", "Unem&shy;ploy&shy;ment", "Life ex&shy;pectancy"];
 ```
 
-`data_suffix`: Suffix if necessary. First entry needs to be empty. Example: 
-```var data_suffix = ["", " mio.", " km\u00B2", "", " %", " %", " yrs"];
+**data_suffix**: Suffix if necessary. First entry needs to be empty. Example: 
+```
+var data_suffix = ["", " mio.", " km\u00B2", "", " %", " %", " yrs"];
 ```
 
-`data_comparison`: Specify if the larger or smaller number wins, first entry needs to be empty. Example: 
-```var data_comparison = ["", "larger", "larger", "larger", "larger", "smaller", "larger"];
+**data_comparison**: Specify if the larger or smaller number wins, first entry needs to be empty. Example: 
+```
+var data_comparison = ["", "larger", "larger", "larger", "larger", "smaller", "larger"];
 ```
 
-Actual cards: Title first, then the numbers in the same order as before. Example: 
-```var austria = ["Austria", 8.77, 83858, 104.6, 5.6, 10.6, 82];
+**Cards**: Title first, then the numbers in the same order as before. Example: 
+```
+var austria = ["Austria", 8.77, 83858, 104.6, 5.6, 10.6, 82];
 ```
 
-Group cards in one array. Example: 
-```var allCards = [austria, belgium, bulgaria, ... ];
+**Cards list (1)**: Array used for dealing the card decks. Example: 
+```
+var allCards = [austria, belgium, bulgaria, ... ];
 ```
 
-List of cards and titles, in case user wants to select a card to play with. Example: 
-```var cardsList = [["austria", "Austria"], ["belgium", "Belgium"], 
+**Cards list (2)**: List of cards and titles, in case user wants to select a card to play with. Example: 
+```
+var cardsList = [["austria", "Austria"], ["belgium", "Belgium"], 
 	["bulgaria", "Bulgaria"], ["croatia", "Croatia"], ["cyprus", "Cyprus"],
   ...];
 ```
