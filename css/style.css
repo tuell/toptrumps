@@ -1,7 +1,17 @@
-/* SCHRIFTART */
+/* These CSS styles control the look of a "top trumps"-style game.
+   Developed by the data journalism team of the Hessischer Rundfunk in 2018
+   (C) 2018/10/22 */
 
+/* Hide Scrollbars */
+html {
+	overflow:hidden;
+}
+
+/* Font and background settings - fonts loaded from Google Fonts in index.html */
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: #444444;
+  /* Set custom background-image for document here */
 }
 
 h1, h2, h3 {
@@ -14,11 +24,14 @@ h4, h5, h6 {
   font-weight: 400;
 }
 
-/* Colours */
-
+/* Colours, overriding the bootstrap standards */
 .btn-primary {
   background-color: #005293!important;
   border-color: #005293!important;
+}
+
+.bg-primary {
+  background-color: #005293!important;
 }
 
 .text-danger, .bg-danger {
@@ -33,33 +46,83 @@ h4, h5, h6 {
   color: #019B72!important;
 }
 
+.text-einleitung {
+  color: #fff;
+}
+
+/* Style links on the player card */
 a {
   color: #006dc1!important;
 }
 
-/* summary text */
+a:hover {
+	text-decoration: none;
+}
+
+#playercard_categories .list-group-item:hover {
+	background-color: #eeeeee;
+}
+
+/* Which elements to hide on start of game */
+#cards, #summary, #startGame, #startTurn, #newGame, #waiting, #showSummary {
+  display: none;
+}
+
+/* Style cards */
+#playercard {
+  min-width: 240px;
+  background-color: #fff;
+	-webkit-box-shadow: 8px 8px 30px #000000;
+    box-shadow: 8px 8px 30px #000000;
+}
+
+#computercard {
+  min-width: 240px;
+  background-color: transparent;
+}
+
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    /*border: 10px solid rgba(0, 0, 0, 0);*/
+    border: none;
+    border-radius: 0.8rem;
+}
+
+.rounded {
+    border-radius: 0.8rem !important;
+}
+
+/* Style summary after the game */
+
+#summaryCard {
+  background-color: rgba(255,255,255,0.9);
+}
 
 #summary_list {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.summary_left, .summary_right {
+	width: 38%;
+}
+
+.summary_center {
+	width: 24%;
+	font-size: 0.8rem;
 }
 
 .winner {
   font-weight: bold;
 }
 
-/* Hide buttons */
-
-#startGame, #startTurn, #newGame, #waiting, #showSummary {
-  display: none;
-}
-
-#cards, #summary {
-  display: none;
-}
-
-#computercard, #playercard {
-  min-width: 250px;
-}
 
 /* Place cards behind each other on mobile */
 
@@ -68,18 +131,22 @@ a {
     z-index: 10;
     position: relative;
     top: 50px;
-    max-width: 250px;
+    max-width: 240px;
   }
 
   #computercard {
     z-index: 5;
     position: relative;
-    left: -155px;
-    max-width: 250px;
+    left: -150px;
+    max-width: 240px;
   }
 
   #buttons {
     margin-top: 50px;
+  }
+
+  #summary {
+    margin-bottom: -40px;
   }
 
 
@@ -108,18 +175,21 @@ a {
   height: 1.5em;
 }
 
-/* Flip-Animation */
-
+/* Flip-Animation via https://davidwalsh.name/css-flip */
 /* entire container, keeps perspective */
 .flip-container {
 	perspective: 1000px;
+	transform-style: preserve-3d;
 }
 
 /* flip the pane when hovered */
-.flip-container.flip .flipper {
-  transform: rotateY(180deg);
+.flip-container.flip .back {
+  transform: rotateY(0deg);
 }
 
+.flip-container.flip .front {
+  transform: rotateY(180deg);
+}
 
 /* flip speed goes here */
 .flipper {
@@ -133,22 +203,33 @@ a {
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   backface-visibility: hidden;
-	position: absolute;
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: absolute;
 	top: 0;
 	left: 0;
   width: 100%;
 }
 
-/* front pane, placed above back */
+/* front pane, initially hidden */
 .front {
 	/* for firefox 31 */
   transform: rotateY(0deg);
+	background-color: #fff;
+	border-radius: 0.8rem;
+	-webkit-box-shadow: 8px 8px 30px #000000;
+    box-shadow: 8px 8px 30px #000000;
 }
 
-/* back, initially hidden pane */
+/* back, placed over front */
 .back {
   z-index: 2;
-	transform: rotateY(180deg);
-  background: url("../img/cardback.jpg") center repeat;
+	transform: rotateY(-180deg);
+  background-image: radial-gradient(#005293, #003259); 
+  /* Set custom background-image for card here */
   color: transparent!important;
+	border: 10px solid rgba(255, 255, 255, 1);
+    border-radius: 0.8rem;
+	-webkit-box-shadow: 8px 8px 30px #000000;
+    box-shadow: 8px 8px 30px #000000;
 }
