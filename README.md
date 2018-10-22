@@ -1,17 +1,20 @@
 # Top trumps online game
-This is a simple online implementation of a "Top trumps"-style card game ("Quartett" in German) with nothing but HTML 5, Javascript and Jquery. 
+This is a simple online implementation of a "Top trumps"-style card game ("Quartett" in German) with nothing but HTML 5, Javascript and Jquery. The game should work in all modern browsers on both desktop and mobile devices.  
 
 _**Disclaimer: This code was built to just work, it is not optimised in terms of elegancy, performance or anything else.**_
 
 ## What you get
-This code implements a full screen web game intended for embedding in another web page. It consists of an HTML-file, the Javascript and Jquery to insert the data and control the game and a stylesheet. The game uses [Bootstrap](https://getbootstrap.com/ "Twitter Bootstrap 4") for structuring and is fully responsive. 
+This code implements a full screen web game intended for embedding in another web page. It consists of an HTML-file, the Javascript and jQuery to insert the data and control the game and a CSS-stylesheet. The game uses [Bootstrap](https://getbootstrap.com/ "Twitter Bootstrap 4") for structuring and is fully responsive. 
 
 An example can be seen and played at [hessenschau.de *(German)*](https://www.hessenschau.de/politik/wahlen/landtagswahl-2018/das-grosse-hrwahl-quartett,ltw18-wahlkreisquartett-104.html "Wahlkreis-Quartett").
 
-## Where it works
-The game should work in all modern browsers on desktop PCs and mobile devices. 
+## The game
+The game is inspired by games like "Top Trumps" [(Wikipedia)](https://en.wikipedia.org/wiki/Top_Trumps "Top Trumps - Wikipedia"). In this implementation the player competes with the computer. Player and computer are each dealt the same number of cards. The cards state different categories of data about the subjects of the game, in this example about countries of the European Union. In the beginning of each round, the player can see his own card and the name of the computer's card. The player has to choose a category. Then the card of the computer is revealed and the values in the selected category are compared. The winner gets a point. After a set number of rounds, a summary and the winner of the game are displayed.  
 
-## How to use it
+## The idea
+Reading about statistical data can be boring and tiring. By presenting data in a game, hopefully the users are more engaged, have fun with the data and better remember them, especially when they did not expect certain constellations.
+
+## How to implement it
 To use this code, download the files and change them according to your needs. All files are extensively annotated in case you want to adapt them.
 
 ### index.html
@@ -66,5 +69,8 @@ var cardsList = [["austria", "Austria"], ["belgium", "Belgium"],
 
 _Data in the example are taken from various Wikipedia pages about the European Union (Oct. 22, 2018)._
 
+## Other works used for this code
+The game is built on the [Bootstrap framework](https://getbootstrap.com/ "Twitter Bootstrap 4"). Other things used are [Fontawesome Icons](https://fontawesome.com/?from=io), David Walsh's [CSS-Flip animation](https://davidwalsh.name/css-flip), [Google Fonts](https://fonts.google.com), [classList.js](https://github.com/eligrey/classList.js) and [jQuery](http://jquery.com/).
+
 ## License
-This code is licensed under the standard GNU General Public License v3.0. You can freely use and adapt it, provided that you name the source and publish under the same license. This game was developped for the [data team of Hessischer Rundfunk _(German)_](https://www.hessenschau.de/redaktion/hessenschaudehr-datenteam,hr-datenteam-102.html "Datenteam des Hessischen Rundfunks") in 2018. 
+This code is licensed under the standard GNU General Public License v3.0. You can freely use and adapt it, provided that you name the source and publish under the same license. This game was developped by the [data team of Hessischer Rundfunk _(German)_](https://www.hessenschau.de/redaktion/hessenschaudehr-datenteam,hr-datenteam-102.html "Datenteam des Hessischen Rundfunks") in 2018. 
