@@ -48,7 +48,7 @@ var data_suffix = ["", " mio.", " km\u00B2", "", " %", " %", " yrs"];
 var data_comparison = ["", "larger", "larger", "larger", "larger", "smaller", "larger"];
 ```
 
-**Cards**: Title first, then the numbers in the same order as before. Example: 
+**Cards**: Title first, then the numbers in the same order as before. The concatenate-function in Excel can help compile the variable definitions from a spreadsheet with data. Example: 
 ```
 var austria = ["Austria", 8.77, 83858, 104.6, 5.6, 10.6, 82];
 ```
@@ -63,6 +63,8 @@ var allCards = [austria, belgium, bulgaria, ... ];
 var cardsList = [["austria", "Austria"], ["belgium", "Belgium"], 
                  ["bulgaria", "Bulgaria"], ["croatia", "Croatia"], ["cyprus", "Cyprus"], ...];
 ```
+
+_Data in the example are taken from various Wikipedia pages about the European Union (Oct. 22, 2018)._
 
 ## License
 This code is licensed under the standard GNU General Public License v3.0. You can freely use and adapt it, provided that you name the source and publish under the same license. This game was developped for the [data team of Hessischer Rundfunk _(German)_](https://www.hessenschau.de/redaktion/hessenschaudehr-datenteam,hr-datenteam-102.html "Datenteam des Hessischen Rundfunks") in 2018. 
