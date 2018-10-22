@@ -18,24 +18,24 @@ To use this code, download the files and change them according to your needs. Al
 This contains the basic elements of the game, such as card templates, containers for hud elements and the container for the summary.
 
 ### index.css
-This stylesheets controls the look and feel of the game. 
+This stylesheet controls the look and feel of the game. 
 
 ### index.js
 This code controls the actual game. Also the data for the cards are loaded here.
 
 #### How to prepare the data
-The data need to be defined as variables in the index.js. This is what you need:
+The data are defined as variables in the index.js. This is what you need:
 
 **data_header**: Array of the different categories, the first entry should be the type of card. Example: 
 ```
 var data_header = ["Country", "Population", "Area", "Density", 
-				   "Growth", "Unemployment", "Life expectancy"];
+                   "Growth", "Unemployment", "Life expectancy"];
 ```
 
 **summary_header**: Shortened description of the categories, insert conditional hyphenation with `&shy;`. Example: 
 ```
 var summary_header = ["", "Popu&shy;lation", "Area", "Den&shy;sity", 
-					  "Growth", "Unem&shy;ploy&shy;ment", "Life ex&shy;pectancy"];
+                      "Growth", "Unem&shy;ploy&shy;ment", "Life ex&shy;pectancy"];
 ```
 
 **data_suffix**: Suffix if necessary. First entry needs to be empty. Example: 
@@ -61,9 +61,8 @@ var allCards = [austria, belgium, bulgaria, ... ];
 **Cards list (2)**: List of cards and titles, in case user wants to select a card to play with. Example: 
 ```
 var cardsList = [["austria", "Austria"], ["belgium", "Belgium"], 
-	["bulgaria", "Bulgaria"], ["croatia", "Croatia"], ["cyprus", "Cyprus"],
-  ...];
+                 ["bulgaria", "Bulgaria"], ["croatia", "Croatia"], ["cyprus", "Cyprus"], ...];
 ```
 
 ## License
-This code is licensed under the standard GNU General Public License v3.0. You can freely use and adapt it, provided that you name the source and publish under the same license. This game was developped for the data team of the Hessischer Rundfunk in 2018. 
+This code is licensed under the standard GNU General Public License v3.0. You can freely use and adapt it, provided that you name the source and publish under the same license. This game was developped for the [data team of Hessischer Rundfunk _(German)_](https://www.hessenschau.de/redaktion/hessenschaudehr-datenteam,hr-datenteam-102.html "Datenteam des Hessischen Rundfunks") in 2018. 
