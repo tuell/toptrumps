@@ -1,14 +1,35 @@
 ﻿<!DOCTYPE html>
 <html lang="de" >
 
+<!--
+    "Top trumps"-style card game implementation for web browsers, 
+	for instructions see https://github.com/tuell/toptrumps
+	
+	Copyright (C) 2018  Till Hafermann
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
 <head>
   <meta charset="UTF-8">
   <title>Quartett-Spiel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <meta name="description" content="Online-Quartett-Spiel / Online top trumps game">
+  <meta name="description" content="Top trumps game">
   <meta name="author" content="Till Hafermann">
   <link href="https://fonts.googleapis.com/css?family=Merriweather|Roboto|Roboto+Condensed" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -24,13 +45,11 @@
   <div class="bg-primary text-white">
 	  <div id="hudcontent" class="mr-auto mx-sm-auto">
 		  <div class="py-2 px-3 d-flex justify-content-between align-content-center">
-			  <!-- Name of player -->
-			  <h4><img src="img/icon_player.png" height="36"> <span class="d-none d-sm-inline">Spieler</span></h4>
+			  <h4><i class="far fa-smile fa-lg"></i> <span class="d-none d-sm-inline">Player</span></h4>
 			  <h4><strong id="player_count">0</strong></h4>
 			  <h4 id="player_count">:</h4>
 			  <h4><strong id="computer_count">0</strong></h4>
-			  <!-- Name of computer -->
-			  <h4><span class="d-none d-sm-inline">Computer</span> <img src="img/icon_computer.png" height="36"> </h4>
+			  <h4><span class="d-none d-sm-inline">Computer</span> <i class="fas fa-robot fa-lg"></i></h4>
 		  </div>
 	  </div>
 	</div>
@@ -56,14 +75,13 @@
 <!-- let player choose game mode before starting -->
 <div class="container-fluid" id="getMode">
   <div class="text-white p-1">
-    <h3 class="mt-3">Spielmodus auswählen</h3> <!-- choose game mode -->
-    <p class="mx-1 my-3">Zuerst können Sie auswählen, wie Sie spielen wollen.
-      Sie können entweder mit sieben zufällig ausgewählten Wahlkreisen spielen
-      oder einen festen Wahlkreis für alle sieben Runden aussuchen.
-      Der Computer erhält immer einen zufälligen Wahlkreis.</p> <!-- Instruction for choosing game mode -->
+    <h3 class="mt-3">Choose game mode</h3>
+    <p class="mx-1 my-3">You can choose wether to play with one single card
+	throughout the entire game or to get a random, different card each turn. The computer
+	will play with a random card in each round.</p> 
     <button type="button" class="btn btn-lg btn-primary btn-block mx-1 my-3" id="randomCards">
-      Zufällige Wahlkreise</button> <!-- Random cards -->
-    <h5 class="my-4 d-block text-center"><i>oder</i></h5>
+      Random cards</button>
+    <h5 class="my-4 d-block text-center"><i>or</i></h5>
     <select class="custom-select custom-select-lg mx-1 mb-1" id="chosenCardSelect">
       <!-- Options from Javascript -->
     </select>
@@ -71,7 +89,7 @@
       <!-- Text from Javascript -->
     </div>
     <button type="button" class="btn btn-lg btn-primary btn-block m-1" id="chosenCardButton">
-      Mit diesem Wahlkreis spielen</button> <!-- Play with chosen card -->
+      Play with chosen card</button> 
   </div>
 </div>
 
@@ -80,11 +98,11 @@
 
 <div class="container-fluid" id="getCategories">
   <div class="text-white p-1">
-    <h3 class="mt-3">Kategorien auswählen</h3> <!-- choose categories -->
-    <p class="mx-1 my-3">Sie können entweder mit fünf zufälligen Kategorien spielen
-      oder unten fünf Kategorien auswählen.</p> <!-- Instruction for choosing categories -->
+    <h3 class="mt-3">Choose categories</h3> 
+    <p class="mx-1 my-3">You can either play with random categories on each card
+	or with five categories of your chosing.</p> 
     <button type="button" class="btn btn-lg btn-primary btn-block mx-1 my-3" id="randomCategories">
-      Zufällige Kategorien</button> <!-- random categories -->
+      Random categories</button> 
     <div class="mx-1 mb-3" id="chosenCategoriesList">
       <!-- category checkboxes from Javascript -->
     </div>
@@ -92,7 +110,7 @@
       <!-- Text from Javascript -->
     </div>
     <button type="button" class="btn btn-lg btn-primary btn-block mx-1 my-3" id="chosenCategoriesButton">
-      Mit diesen Kategorien spielen</button> <!-- play with chosen categories -->
+      Play with selected categories</button>
   </div>
 </div>
 
@@ -136,11 +154,11 @@
 
 <!-- Buttons to control the game -->
 <div class="d-flex w-100 mr-auto mx-sm-auto justify-content-center py-1 px-1 py-sm-3 px-sm-4" id="buttons">
-  <button type="button" class="btn btn-lg btn-light" id="startGame">Neues Spiel</button> <!-- start game -->
-  <button type="button" class="btn btn-lg btn-light" id="startTurn">N&auml;chste Runde</button> <!-- next round -->
-  <button type="button" class="btn btn-lg btn-light" id="newGame">Neues Spiel</button> <!-- new game -->
-  <button type="button" class="btn btn-lg btn-light" id="showSummary">Zusammenfassung</button> <!-- summary -->
-  <button type="button" class="btn btn-lg btn-dark" id="waiting" disabled>Sie sind dran!</button> <!-- "your turn" -->
+  <button type="button" class="btn btn-lg btn-light" id="startGame">New game</button> 
+  <button type="button" class="btn btn-lg btn-light" id="startTurn">Next turn</button> 
+  <button type="button" class="btn btn-lg btn-light" id="newGame">New game</button> 
+  <button type="button" class="btn btn-lg btn-light" id="showSummary">Show summary</button> 
+  <button type="button" class="btn btn-lg btn-dark" id="waiting" disabled>Your turn!</button> 
 </div>
 
 <!-- Progress bar -->
@@ -148,7 +166,7 @@
 <div class="row mx-1" id="hud2">
   <div class="col-11 col-sm-6 mx-auto py-1 px-2">
     <div style="color: #AEAEAE">
-      <h6 class="d-none d-sm-block">Spielfortschritt</h6> <!-- name: progress -->
+      <h6 class="d-none d-sm-block">Progress</h6> 
       <div class="progress w-100" id="gameProgress">
       </div>
     </div>
