@@ -1,7 +1,7 @@
-/* These CSS styles control the look of a "top trumps"-style game. 
+/* These CSS styles control the look of a "top trumps"-style game.
    Developed by the data journalism team of the Hessischer Rundfunk in 2018 */
 
-/*  Copyright (C) 2018  Till Hafermann
+/*  Copyright (C) 2018  Till Hafermann, Miguel Pascal Sanina, hr-Datenteam
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-   
-   
+
+
 /* Hide Scrollbars */
 html {
 	overflow:hidden;
@@ -239,7 +239,7 @@ a:hover {
 .back {
   z-index: 2;
 	transform: rotateY(-180deg);
-  background-image: radial-gradient(#005293, #003259); 
+  background-image: radial-gradient(#005293, #003259);
   /* Set custom background-image for card here */
   color: transparent!important;
 	border: 10px solid rgba(255, 255, 255, 1);
