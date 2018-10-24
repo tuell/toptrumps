@@ -1,7 +1,7 @@
 // This script controls the mechanics behind a "top trumps"-style game.
 // Developed by the data journalism team of the Hessischer Rundfunk in 2018
 
-/*  Copyright (C) 2018  Till Hafermann
+/*  Copyright (C) 2018  Till Hafermann, Miguel Pascal Sanina, hr-Datenteam
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 // CUSTOMIZATION: To build your own game, change the text to display
 
 // dropdown for choosing a card
@@ -52,11 +52,11 @@ var currentRound = 1;
 // Example data for countries of the EU taken from various Wikipedia pages (Oct. 22, 2018)
 
 // Data header: Names of the categories, first one = title of the card
-var data_header = ["Country", "Population", "Area", "Density", 
+var data_header = ["Country", "Population", "Area", "Density",
 				   "Growth", "Unemployment", "Life expectancy"];
 
 // Category names for summary
-var summary_header = ["", "Popu&shy;lation", "Area", "Den&shy;sity", 
+var summary_header = ["", "Popu&shy;lation", "Area", "Den&shy;sity",
 					  "Growth", "Unem&shy;ploy&shy;ment", "Life ex&shy;pectancy"];
 
 // Units if necessary, first entry always empty
@@ -97,23 +97,23 @@ var uk = ["United Kingdom", 65.81, 244820, 268.8, 6.5, 4.3, 82];
 
 
 // group cards in one array
-var allCards = [austria, belgium, bulgaria, croatia, cyprus, czechrepublic, 
-				denmark, estonia, finland, france, germany, greece, hungary, 
-				ireland, italy, latvia, lithuania, luxembourg, malta, netherlands, 
-				poland, portugal, romania, slovakia, slovenia, spain, 
+var allCards = [austria, belgium, bulgaria, croatia, cyprus, czechrepublic,
+				denmark, estonia, finland, france, germany, greece, hungary,
+				ireland, italy, latvia, lithuania, luxembourg, malta, netherlands,
+				poland, portugal, romania, slovakia, slovenia, spain,
 				sweden, uk];
 
 // list of cards in case player wants to choose a specific card to play with
 // list of arrays with variable name and titel of card
-var cardsList = [["austria", "Austria"], ["belgium", "Belgium"], 
-	["bulgaria", "Bulgaria"], ["croatia", "Croatia"], ["cyprus", "Cyprus"], 
-	["czechrepublic", "Czech Republic"], ["denmark", "Denmark"], ["estonia", "Estonia"], 
-	["finland", "Finland"], ["france", "France"], ["germany", "Germany"], 
-	["greece", "Greece"], ["hungary", "Hungary"], ["ireland", "Ireland"], 
-	["italy", "Italy"], ["latvia", "Latvia"], ["lithuania", "Lithuania"], 
-	["luxembourg", "Luxembourg"], ["malta", "Malta"], 
-	["netherlands", "Netherlands"], ["poland", "Poland"], ["portugal", "Portugal"], 
-	["romania", "Romania"], ["slovakia", "Slovakia"], ["slovenia", "Slovenia"], 
+var cardsList = [["austria", "Austria"], ["belgium", "Belgium"],
+	["bulgaria", "Bulgaria"], ["croatia", "Croatia"], ["cyprus", "Cyprus"],
+	["czechrepublic", "Czech Republic"], ["denmark", "Denmark"], ["estonia", "Estonia"],
+	["finland", "Finland"], ["france", "France"], ["germany", "Germany"],
+	["greece", "Greece"], ["hungary", "Hungary"], ["ireland", "Ireland"],
+	["italy", "Italy"], ["latvia", "Latvia"], ["lithuania", "Lithuania"],
+	["luxembourg", "Luxembourg"], ["malta", "Malta"],
+	["netherlands", "Netherlands"], ["poland", "Poland"], ["portugal", "Portugal"],
+	["romania", "Romania"], ["slovakia", "Slovakia"], ["slovenia", "Slovenia"],
 	["spain", "Spain"], ["sweden", "Sweden"], ["uk", "United Kingdom"]];
 
 
