@@ -4,7 +4,7 @@ This is a simple online implementation of a "Top trumps"-style card game ("Quart
 _**Disclaimer: This code was built to just work, it is not optimised in terms of elegance, performance or anything else.**_
 
 ## What you get
-This code implements a full screen web game intended for embedding in another web page. It consists of an HTML-file, the Javascript and jQuery to insert the data and control the game and a CSS-stylesheet. The game uses [Bootstrap](https://getbootstrap.com/ "Twitter Bootstrap 4") for structuring and is fully responsive. 
+This code implements a full screen web game intended for embedding in another web page. It consists of an HTML-file, the Javascript and jQuery to insert the data and control the game and a CSS-stylesheet. The game uses [Bootstrap](https://getbootstrap.com/ "Twitter Bootstrap 4") for structuring and is fully responsive.
 
 An example can be seen and played at [hessenschau.de *(German)*](https://www.hessenschau.de/politik/wahlen/landtagswahl-2018/das-grosse-hrwahl-quartett,ltw18-wahlkreisquartett-104.html "Wahlkreis-Quartett").
 
@@ -21,7 +21,7 @@ To use this code, download the files and change them according to your needs. Th
 This contains the basic elements of the game, such as card templates, containers for hud elements and the container for the summary.
 
 ### index.css
-This stylesheet controls the look and feel of the game. 
+This stylesheet controls the look and feel of the game.
 
 ### index.js
 This code controls the actual game. Also the data for the cards are loaded here.
@@ -29,41 +29,41 @@ This code controls the actual game. Also the data for the cards are loaded here.
 #### How to prepare the data
 The data are defined as variables in the index.js. This is what you need:
 
-**data_header**: Array of the different categories, the first entry should be the type of card. Example: 
+**data_header**: Array of the different categories, the first entry should be the type of card. Example:
 ```
-var data_header = ["Country", "Population", "Area", "Density", 
+var data_header = ["Country", "Population", "Area", "Density",
                    "Growth", "Unemployment", "Life expectancy"];
 ```
 
-**summary_header**: Shortened description of the categories, insert conditional hyphenation with `&shy;`. Example: 
+**summary_header**: Shortened description of the categories, insert conditional hyphenation with `&shy;`. Example:
 ```
-var summary_header = ["", "Popu&shy;lation", "Area", "Den&shy;sity", 
+var summary_header = ["", "Popu&shy;lation", "Area", "Den&shy;sity",
                       "Growth", "Unem&shy;ploy&shy;ment", "Life ex&shy;pectancy"];
 ```
 
-**data_suffix**: Suffix if necessary. First entry needs to be empty. Example: 
+**data_suffix**: Suffix if necessary. First entry needs to be empty. Example:
 ```
 var data_suffix = ["", " mio.", " km\u00B2", "", " %", " %", " yrs"];
 ```
 
-**data_comparison**: Specify if the larger or smaller number wins, first entry needs to be empty. Example: 
+**data_comparison**: Specify if the larger or smaller number wins, first entry needs to be empty. Example:
 ```
 var data_comparison = ["", "larger", "larger", "larger", "larger", "smaller", "larger"];
 ```
 
-**Cards**: Title first, then the numbers in the same order as before. The concatenate-function in Excel can help compile the variable definitions from a spreadsheet with data. Example: 
+**Cards**: Title first, then the numbers in the same order as before. The concatenate-function in Excel can help compile the variable definitions from a spreadsheet with data. Example:
 ```
 var austria = ["Austria", 8.77, 83858, 104.6, 5.6, 10.6, 82];
 ```
 
-**Cards list (1)**: Array used for dealing the card decks. Example: 
+**Cards list (1)**: Array used for dealing the card decks. Example:
 ```
 var allCards = [austria, belgium, bulgaria, ... ];
 ```
 
-**Cards list (2)**: List of cards and titles, in case user wants to select a card to play with. Example: 
+**Cards list (2)**: List of cards and titles, in case user wants to select a card to play with. Example:
 ```
-var cardsList = [["austria", "Austria"], ["belgium", "Belgium"], 
+var cardsList = [["austria", "Austria"], ["belgium", "Belgium"],
                  ["bulgaria", "Bulgaria"], ["croatia", "Croatia"], ["cyprus", "Cyprus"], ...];
 ```
 
@@ -71,4 +71,7 @@ var cardsList = [["austria", "Austria"], ["belgium", "Belgium"],
 The game is built on the [Bootstrap framework](https://getbootstrap.com/ "Twitter Bootstrap 4"). Other things used are [Fontawesome Icons](https://fontawesome.com/?from=io), David Walsh's [CSS-Flip animation](https://davidwalsh.name/css-flip), [Google Fonts](https://fonts.google.com), [classList.js](https://github.com/eligrey/classList.js) and [jQuery](http://jquery.com/). Data in the example are taken from various Wikipedia pages about the European Union (Oct. 22, 2018).
 
 ## License
-This code is published under the standard GNU General Public License v3.0. You can freely use and adapt it, provided that you name the source and publish under the same license. This game was developed by the [data team of Hessischer Rundfunk _(German)_](https://www.hessenschau.de/redaktion/hessenschaudehr-datenteam,hr-datenteam-102.html "Datenteam des Hessischen Rundfunks") in 2018. 
+This code is published under the standard GNU General Public License v3.0. You can freely use and adapt it, provided that you name the source and publish under the same license.
+
+## Made by
+This game was developed by [Till Hafermann](https://twitter.com/hafertill "@hafertill on Twitter") and Miguel Pascal Sanina for the [data team of Hessischer Rundfunk _(German website)_](https://www.hessenschau.de/redaktion/hessenschaudehr-datenteam,hr-datenteam-102.html "Datenteam des Hessischen Rundfunks"). 
