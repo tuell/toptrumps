@@ -74,4 +74,4 @@ The game is built on the [Bootstrap framework](https://getbootstrap.com/ "Twitte
 This code is published under the standard GNU General Public License v3.0. You can freely use and adapt it, provided that you name the source and publish under the same license.
 
 ## Made by
-This game was developed by [Till Hafermann](https://twitter.com/hafertill "@hafertill on Twitter") and Miguel Pascal Sanina for the [data team of Hessischer Rundfunk _(German website)_](https://www.hessenschau.de/redaktion/hessenschaudehr-datenteam,hr-datenteam-102.html "Datenteam des Hessischen Rundfunks"). 
+This game was developed by [Till Hafermann](https://twitter.com/hafertill "@hafertill on Twitter") and Miguel Pascual Sanina for the [data team of Hessischer Rundfunk _(German website)_](https://www.hessenschau.de/redaktion/hessenschaudehr-datenteam,hr-datenteam-102.html "Datenteam des Hessischen Rundfunks"). 
